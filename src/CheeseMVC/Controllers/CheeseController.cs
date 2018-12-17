@@ -1,26 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CheeseMVC.Data;
 using CheeseMVC.Models;
-using System.Collections.Generic;
 using CheeseMVC.ViewModels;
-using CheeseMVC.Data;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CheeseMVC.Controllers
 {
     public class CheeseController : Controller
     {
+        //private field of type DBcontext used to interface with database
         private CheeseDbContext context;
 
+        //constructor that takes instance of DKcontext
         public CheeseController(CheeseDbContext dbContext)
         {
+            //set field to  be equal to Db context that is passed in to it
             context = dbContext;
         }
 
         // GET: /<controller>/
         public IActionResult Index()
-        {
+        {//retrieve all cheeses stored in db - db object are  not lists - turned into list with ToList command
             List<Cheese> cheeses = context.Cheeses.ToList();
-
+            //view receiving list
             return View(cheeses);
         }
 
@@ -44,6 +47,7 @@ namespace CheeseMVC.Controllers
                 };
 
                 context.Cheeses.Add(newCheese);
+                //must save changes made to database
                 context.SaveChanges();
 
                 return Redirect("/Cheese");
