@@ -23,7 +23,7 @@ namespace CheeseMVC.Controllers
         public IActionResult Index()
         {//retrieve all cheeses stored in db - db object are  not lists - turned into list with ToList command
             List<CheeseCategory> categories = context.Categories.ToList();
-            return View();
+            return View(categories);
         }
 
         public IActionResult Add()
